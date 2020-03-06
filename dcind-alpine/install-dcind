@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# installs git, make, docker, docker-compose on alpine
+
+DOCKER_VERSION="${DOCKER_VERSION:-19.03.5}"
+DOCKER_COMPOSE_VERSION="${DOCKER_COMPOSE_VERSION:-1.19.0}"
+
+apk add --update --no-cache device-mapper py-pip iptables util-linux
+
+curl -fL "https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" | tar xz
+
+pip install docker-compose==${DOCKER_COMPOSE_VERSION}
+
+mv /docker/* /bin/ && chmod +x /bin/docker*
+

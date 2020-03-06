@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+# installs docker-in-docker stuff
+
+DOCKER_CHANNEL="${DOCKER_CHANNEL:-static}"
+DOCKER_VERSION="${DOCKER_VERSION:-18.09.8}"
+DOCKER_COMPOSE_VERSION="${DOCKER_COMPOSE_VERSION:-1.26.0-rc2}"
+
+apt update 
+
+apt install -y curl git util-linux libdevmapper-dev gcc libc-dev make iptables iproute2
+
+curl -sL "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /bin/docker-compose
+
+curl -sL https://download.docker.com/linux/${DOCKER_CHANNEL}/stable/x86_64/docker-${DOCKER_VERSION}.tgz | tar zx 
+
+mv docker/* /bin && chmod +x /bin/docker*
