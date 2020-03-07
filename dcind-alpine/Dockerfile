@@ -1,5 +1,7 @@
 # alpine based git + make + docker + docker-compose build container
-FROM spothero/baseline:latest
+FROM alpine
+
+RUN apk add git bash make curl
 
 # must run start-docker before using docker
 COPY start-docker /bin/
